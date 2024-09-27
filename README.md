@@ -1,3 +1,4 @@
 # rtl_stt_evaluator
 
-![image](https://github.com/user-attachments/assets/8b9d5916-844d-4f7b-9e88-6189afdaebd5)
+![image](https://github.com/user-attachments/assets/80083568-3a98-4dae-bdf5-2ee1d140826a)
+
