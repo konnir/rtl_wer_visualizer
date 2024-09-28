@@ -31,8 +31,8 @@ poetry install
 Make sure you have Python 3.11 installed. You can manage your Python versions using tools like `pyenv`.
 
 ```bash
-pyenv install 3.11.0
-pyenv local 3.11.0
+pyenv install 3.11
+pyenv local 3.11
 ```
 
 ## Usage
