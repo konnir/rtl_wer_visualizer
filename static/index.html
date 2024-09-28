@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persian STT Checker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>SemLex - WER Visualizer for RTL Languages on Speach To Text</h1>
+    <div class="container">
+
+        <div class="right-panel">
+            <div id="output-text"></div>
+        </div>
+
+        <div class="left-panel">
+            <label for="server-url">:STT Server</label>
+            <select id="server-url">
+                <option value="http://localhost:8000">http://localhost:8000</option>
+            </select>
+
+            <label for="use-custom-ip">
+                <input type="checkbox" id="use-custom-ip"> Custom STT URL
+            </label>
+            <input type="text" id="custom-ip" placeholder="Enter Custom IP" style="display: none;">
+
+
+            <button id="voice-file-btn">Voice File...</button>
+            <input type="file" id="voice-file-input" accept=".wav, .mp3" style="display: none;">
+
+            <button id="reference-file-btn">Reference File...</button>
+            <input type="file" id="reference-file-input" accept=".txt" style="display: none;">
+
+            <button id="check-btn">STT</button>
+
+            <div class="legend">
+                <p><span class="wrong">Wrong</span></p>
+                <p><span class="fix">Fix</span></p>
+                <p><span class="insertion">Insertion</span></p>
+                <p><span class="deletion">Deletion</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

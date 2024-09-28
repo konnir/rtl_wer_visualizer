@@ -1,0 +1,17 @@
+I build a Speach To Text Checker.
+
+Direction: the app is in Right to Left language (Persian) and the text is in Persian.
+Title: Persian STT Checker
+
+you can send it a voice file (wav/mp3) and a reference text file (txt).
+it will return text in Persian and English with the transcription of the voice file and fixes that it did.
+
+below the title there are 2 part:
+on the left side, there are 3 buttons: "Choose Voice File", "Choose Reference File", "Check".
+
+This is the textually output of my server and what i want to happen on screen in terms of colors:
+wrong words will be marked by <> and should be color in red.
+fixed words will be marked () and should be color in green.
+additions words will be marked by [] and should be color in blue.
+
+write the code in index, styles and script files.
