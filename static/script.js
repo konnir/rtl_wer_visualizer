@@ -2,8 +2,44 @@ document.getElementById('voice-file-btn').addEventListener('click', () => {
     document.getElementById('voice-file-input').click();
 });
 
+// When voice file is selected, change button color to blue
+document.getElementById('voice-file-input').addEventListener('change', function() {
+    const voiceFileBtn = document.getElementById('voice-file-btn');
+    if (this.files.length > 0) {
+        voiceFileBtn.style.backgroundColor = 'blue';  // Change to blue when file is selected
+    } else {
+        voiceFileBtn.style.backgroundColor = '';  // Reset to default if no file
+    }
+});
+
+
 document.getElementById('reference-file-btn').addEventListener('click', () => {
     document.getElementById('reference-file-input').click();
+});
+
+// When reference file is selected, change button color to blue
+document.getElementById('reference-file-input').addEventListener('change', function() {
+    const referenceFileBtn = document.getElementById('reference-file-btn');
+    if (this.files.length > 0) {
+        referenceFileBtn.style.backgroundColor = 'blue';
+    } else {
+        referenceFileBtn.style.backgroundColor = '';
+    }
+});
+
+
+document.getElementById('hypothesis-file-btn').addEventListener('click', () => {
+    document.getElementById('hypothesis-file-input').click();
+});
+
+// When hypothesis file is selected
+document.getElementById('hypothesis-file-input').addEventListener('change', function() {
+    const hypothesisFileBtn = document.getElementById('hypothesis-file-btn');
+    if (this.files.length > 0) {
+        hypothesisFileBtn.style.backgroundColor = 'blue';
+    } else {
+        hypothesisFileBtn.style.backgroundColor = '';
+    }
 });
 
 document.getElementById('check-btn').addEventListener('click', async () => {
@@ -12,6 +48,7 @@ document.getElementById('check-btn').addEventListener('click', async () => {
 
     const voiceFile = document.getElementById('voice-file-input').files[0];
     const referenceFile = document.getElementById('reference-file-input').files[0];
+    const hypothesisFile = document.getElementById('hypothesis-file-input').files[0];
     const useCustomIp = document.getElementById('use-custom-ip').checked;
     const customIp = document.getElementById('custom-ip').value;
     const serverUrl = document.getElementById('server-url').value;
@@ -19,15 +56,16 @@ document.getElementById('check-btn').addEventListener('click', async () => {
     // Determine whether to use the custom IP or the selected server URL
     const finalUrl = useCustomIp && customIp ? customIp : serverUrl;
 
-    if (!voiceFile || !referenceFile) {
-        alert('Please select both voice and reference files.');
+    if (!referenceFile || (!voiceFile && !hypothesisFile)) {
+        alert('Please select reference with voice or hypothesis files.');
         return;
     }
 
     const formData = new FormData();
-    formData.append('voiceFile', voiceFile);
-    formData.append('referenceFile', referenceFile);
-    formData.append('serverUrl', finalUrl);
+    if (voiceFile) formData.append('voiceFile', voiceFile);  // Only append if not null
+    formData.append('referenceFile', referenceFile);  // Required
+    formData.append('serverUrl', finalUrl);  // Required
+    if (hypothesisFile) formData.append('hypothesisFile', hypothesisFile);  // Only append if not null
 
     try {
         const response = await fetch('/evaluate', {

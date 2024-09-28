@@ -1,4 +1,5 @@
 import json
+from typing import Optional
 
 import httpx
 from fastapi import FastAPI, UploadFile, File, Form
@@ -24,44 +25,46 @@ rtl_checker_service = RtlCheckerService()
 
 @app.post("/evaluate")
 async def evaluate(
-        voiceFile: UploadFile = File(...),
-        referenceFile: UploadFile = File(...),
-        serverUrl: str = Form(...)
-):
+        voiceFile: Optional[UploadFile] = File(None),  # Optional
+        referenceFile: UploadFile = File(...),  # Required
+        serverUrl: str = Form(...),  # Required
+        hypothesisFile: Optional[UploadFile] = File(None)  # Optional
+    ):
     print("Received files")
-    stt_server_url = f"{serverUrl}/pstt/sync/file"
+    if voiceFile:
+        stt_server_url = f"{serverUrl}/pstt/sync/file"
 
-    # Read the binary content of the voice file
-    voice_file_content = await voiceFile.read()
+        # Read the binary content of the voice file
+        voice_file_content = await voiceFile.read()
 
-    # Prepare the file to send as multipart/form-data with the correct key (audio_file)
-    files = {
-        'audio_file': ('voice_file.wav', voice_file_content, voiceFile.content_type)  # Send with key 'audio_file'
-    }
+        # Prepare the file to send as multipart/form-data with the correct key (audio_file)
+        files = {
+            'audio_file': ('voice_file.wav', voice_file_content, voiceFile.content_type)  # Send with key 'audio_file'
+        }
 
-    # Send the file to the external API using multipart/form-data
-    async with httpx.AsyncClient() as client:
-        response = await client.post(
-            stt_server_url,  # Your external API endpoint
-            files=files,  # Multipart/form-data with the voice file
-            timeout=60
-        )
+        # Send the file to the external API using multipart/form-data
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                stt_server_url,  # Your external API endpoint
+                files=files,  # Multipart/form-data with the voice file
+                timeout=60
+            )
 
-        # Process the response
-        if response.status_code == 200:
-            print(response.content)
-            decoded_string = response.content.decode('utf-8')
-            parsed_json = json.loads(decoded_string)
-            texts = [segment['text'] for segment in parsed_json['speech_segments']]
-            text = " ".join([text_segment for text_segment in texts])
-            encoded_text = rtl_checker_service.check_rtl_text(referenceFile.file.read().decode('utf-8'), text)
+            # Process the response
+            if response.status_code == 200:
+                print(response.content)
+                decoded_string = response.content.decode('utf-8')
+                parsed_json = json.loads(decoded_string)
+                texts = [segment['text'] for segment in parsed_json['speech_segments']]
+                text = " ".join([text_segment for text_segment in texts])
+                encoded_text = rtl_checker_service.check_rtl_text(referenceFile.file.read().decode('utf-8'), text)
 
-            return JSONResponse(content={"calculated_text": encoded_text})
-        else:
-            return {"error": f"Failed with status code {response.status_code}"}
-
-
-    return result
+                return JSONResponse(content={"calculated_text": encoded_text})
+            else:
+                return {"error": f"Failed with status code {response.status_code}"}
+    elif hypothesisFile:
+        encoded_text = rtl_checker_service.check_rtl_text(referenceFile.file.read().decode('utf-8'), hypothesisFile.file.read().decode('utf-8'))
+        return JSONResponse(content={"calculated_text": encoded_text})
 
 
 # Serve static files
