@@ -1,6 +1,6 @@
 # RTL_WER_VISUALIZER
 
-![image](https://github.com/user-attachments/assets/eda9cbd8-aa84-4af3-81a8-67dc499e536b)
+![image](https://github.com/user-attachments/assets/1a9640f5-891c-4440-98a7-7bd182433427)
 
 ## Project Overview
 
