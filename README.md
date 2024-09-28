@@ -1,11 +1,17 @@
-# rtl_wer_visualizer
+# RTL_WER_VISUALIZER
 
 ![image](https://github.com/user-attachments/assets/28eae762-383a-4143-b47d-f34fd4521469)
 
 
 ## Project Overview
 
-This project, `rtl_stt_evaluator`, is designed to evaluate the performance of real-time speech-to-text systems. It provides tools and metrics to assess accuracy, latency, and other critical factors.
+This project, `rtl_wer_visualizer`, is designed to evaluate the performance of real-time speech-to-text systems. 
+It allow to compare hypothesis text (output of stt system) nad reference text (the gorund truth usaully trianscribed by human). 
+This is designed to RTL lanaguages specifically. 
+The result is the hyphotesis text with: 
+- **substitute** - the wrong word in <span style="color:red;">RED</span> and below it the right word in <span style="color:green;">GREEN</span>
+- **insertions** - words that the hypothesis provided that are not in the reference in <span style="color:blue;">BLUE</span>
+- **deletions** - words that the hypothesis did not mention but are in the reference in <span style="color:gray;">GRAY</span>
 
 ## Features
 
