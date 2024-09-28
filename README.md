@@ -15,7 +15,8 @@ The result is the hyphotesis text with:
 
 ## Features
 
-- Allow testing of STT server using a voice file and a text file with the actual translation.
+- Allow testing of STT server using a voice file and a text file with the actual transcription.
+- Allow testing of STT output using a text file and a text file with the actual transcription.
 - Enable visualization of the JIWER report.
 
 ## Installation
@@ -51,6 +52,10 @@ To view the user interface for the `rtl_stt_evaluator`, follow these steps:
 2. Open your web browser and navigate to `http://localhost:8000`.
 
 You should now see the UI where you can upload voice files and text files for evaluation.
+
+## Credits
+
+This project utilizes the JIWER library for computing Word Error Rate (WER) and other related metrics. JIWER is an open-source library that simplifies the comparison between hypothesis and reference texts. You can find more information about it here: https://github.com/jitsi/jiwer .
 
 ## Contributing
 
