@@ -2,6 +2,9 @@
 
 ![image](https://github.com/user-attachments/assets/1a9640f5-891c-4440-98a7-7bd182433427)
 
+## Demo:
+https://wer-visualizer-549164777362.us-central1.run.app/ (allow few seconds for wake up)
+
 ## Project Overview
 
 This project, `rtl_wer_visualizer`, is designed to evaluate the performance of real-time speech-to-text systems. 
