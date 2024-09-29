@@ -92,7 +92,6 @@ function formatOutputText(text) {
         // Wrap the wrong word and its fix in a wrapper div
         .replace(/<([^>]+)>\s*\(([^)]+)\)/g, '<span class="fix-wrapper"><span class="fix">$2</span><span class="wrong">$1</span></span>')
         .replace(/\{([^}]+)\}/g, '<span class="insertion">$1</span>')
-        // Replace deleted words with empty space equivalent to the word length
         // Replace deleted words without adding space
         .replace(/\[([^\]]+)]/g, function(match, deletionWord) {
             return `<span class="deletion-wrapper"><span class="deletion">${deletionWord}</span></span>`;

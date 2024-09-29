@@ -47,16 +47,24 @@ async def evaluate(
             response = await client.post(
                 stt_server_url,  # Your external API endpoint
                 files=files,  # Multipart/form-data with the voice file
-                timeout=60
+                timeout=120
             )
 
             # Process the response
             if response.status_code == 200:
-                print(response.content)
                 decoded_string = response.content.decode('utf-8')
                 parsed_json = json.loads(decoded_string)
-                texts = [segment['text'] for segment in parsed_json['speech_segments']]
-                text = " ".join([text_segment for text_segment in texts])
+
+
+                # texts = [segment['text'] for segment in parsed_json['speech_segments']]
+
+                if "speech_segments" in parsed_json:
+                    speech_segments = parsed_json.get("speech_segments", [])
+                    texts = [segment.get("text", "") for segment in speech_segments]
+                else:
+                    texts = [parsed_json.get("speakerA", '')]
+                
+                text = "\n ".join([text_segment for text_segment in texts])
                 encoded_text = rtl_checker_service.check_rtl_text(referenceFile.file.read().decode('utf-8'), text)
 
                 return JSONResponse(content={"calculated_text": encoded_text})
